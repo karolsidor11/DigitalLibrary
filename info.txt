@@ -1,0 +1,6 @@
+ Baza H2 -> Spring Data
+ Spring Core
+ Spring MVC
+ Thyemeleaf
+
+
