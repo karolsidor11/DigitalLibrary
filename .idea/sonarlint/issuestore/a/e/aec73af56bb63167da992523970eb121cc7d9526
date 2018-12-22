@@ -1,0 +1,12 @@
+
+Xsquid:S2094"BRemove this empty class, write its code or make it an "interface".(âƒˆZ
+¢squid:S1598"ŠThis file "UserDaoTest.java" should be located in "pl\sidor\dao" directory, not in "C:\devTest\DigitalLibrary\src\test\java\pl.sidor\dao".(„ğÀ–
+squid:UselessImportCheck
+"^Remove this unused import 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType'.(à¤‘`
+Psquid:UselessImportCheck",Remove this unused import 'org.junit.After'.(«ñÖ«
+‰squid:UselessImportCheck"`Remove this unused import 'org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate'.(ş¯ñ·şÿÿÿÿ
+Šsquid:UselessImportCheck	"aRemove this unused import 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder'.(ëŒĞ™ÿÿÿÿÿ
+Tsquid:UselessImportCheck"+Remove this unused import 'org.junit.Test'.(ùøèøÿÿÿÿ
+Psquid:UselessImportCheck"-Remove this unused import 'org.junit.Assert'.(­ŞL
+~squid:UselessImportCheck"ZRemove this unused import 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabase'.(‘­ø˜
+Qsquid:UselessImportCheck"-Remove this unused import 'org.junit.Before'.(ÙşºÙ
