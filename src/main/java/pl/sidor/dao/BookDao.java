@@ -8,4 +8,11 @@ public interface BookDao {
     Book findByTitle(String title);
 
     List<Book> findAll();
+
+    void add(Book book);
+
+    void delete(Integer id);
+
+    void update(Integer id);
+
 }

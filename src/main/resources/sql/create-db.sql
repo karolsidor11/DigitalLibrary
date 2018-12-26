@@ -3,7 +3,10 @@
 CREATE TABLE users (
   id    INTEGER PRIMARY KEY,
   name  VARCHAR(30),
-  email VARCHAR(50)
+  email VARCHAR(50),
+  login VARCHAR(30),
+  password VARCHAR(30)
+
 );
 CREATE TABLE books (
   id     INTEGER PRIMARY KEY,

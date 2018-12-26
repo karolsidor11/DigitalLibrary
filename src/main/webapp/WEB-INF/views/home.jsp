@@ -1,9 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
-    <link rel="stylesheet" href=" resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href=" resources/css/bootstrap.min.css" type="text/css">
+    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css">
+    <style>
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 150px;
+            height: 38px;
+            border-radius: 5px
+        }
+    </style>
 </head>
 
 <body style="background-color: lavender">
@@ -21,7 +30,7 @@
 <section style="text-align: center">
 
     <a class="link" href="<c:url value="/login" />">
-        <button class="btn btn-primary" style="width: 150px">
+        <button class="btn-primary" style="width: 150px">
             Logowanie
         </button>
     </a>
@@ -29,7 +38,7 @@
     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
     <a class="link" href="<c:url value="/register" />">
-        <button class="btn btn-primary" style="width: 150px">
+        <button class="btn-primary" style="width: 150px">
             Rejestracja
         </button>
     </a>
@@ -47,7 +56,9 @@
     <img src="../../resources/images/maven.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 </div>
 <br><br>
-
+<div align="center" style="font-size: 20px;color: red">
+    ${info}
+</div>
 
 </body>
 </html>

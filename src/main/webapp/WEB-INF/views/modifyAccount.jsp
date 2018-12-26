@@ -2,14 +2,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
-  Date: 21.12.2018
-  Time: 18:19
+  Date: 26.12.2018
+  Time: 13:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Panel rejestracji użytkownika</title>
+    <title>Modyfikacja konta użytkownika</title>
+
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css">
     <link href="<c:url value="/resources/css/arkusz.css" />" rel="stylesheet" type="text/css">
     <style>
@@ -24,11 +25,10 @@
         }
     </style>
 </head>
-<body style="background-color: lavender">
+<body>
 
 <br>
-<h2 align="center" style="color: darkblue; font-size: 30px ;font-weight: normal">Zarejestruj się w Cyfrowej
-    Bibliotece</h2>
+<h2 align="center" style="color: darkblue; font-size: 30px ;font-weight: normal">Wprowadź zmiany w Twoim koncie</h2>
 <br>
 
 <div id="panel">
@@ -49,7 +49,7 @@
             Potwierdź hasło : &nbsp <input type="password" placeholder="Powtórz hasło"><br>
             <br>
             <div id="lower">
-                <input class="btn-primary" type="submit" value="Zarejestruj się">
+                <input class="btn-primary" type="submit" formaction="/updateAccount" value="Zatwierdź zmiany">
             </div>
 
         </div>

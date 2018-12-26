@@ -6,34 +6,37 @@
   Time: 18:19
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Panel logowania użytkownika</title>
-    <link rel="stylesheet" href="resources/css/arkusz.css" type="text/css">
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+    <%--<link rel="stylesheet" href="resources/css/arkusz.css" type="text/css">--%>
+    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css">
+    <link href="<c:url value="/resources/css/arkusz.css" />" rel="stylesheet" type="text/css">
+    <style>
+        .btn-primary {color: #fff;background-color: #007bff;border-color: #007bff;border-radius: 5px}
+    </style>
 </head>
 <body style="background-color: lavender">
 
-<div id="loginForm" align="center">
+<div align="center">
     <br><br>
     <h2 style=" color: darkblue ;text-align: center; font-size: 30px">Zaloguj się do swojego konta</h2><br>
 
-
-    <div id="panel">
+    <div align="center">
         <form method="post">
-            <label for="username">Nazwa użytkownika:</label>
-            <input type="text" id="username" name="login">
-            <label for="password">Hasło:</label>
-            <input type="password" id="password" name="password">
-            <div id="lower">
-                <input type="checkbox"><label class="check">Zapamiętaj mnie!</label>
-                <input class="btn btn-primary" type="submit" formaction="loginProcess"
-                       style="height: 38px; width: 150px; position: center" value="Zaloguj się">
-            </div>
+            <label for="username">Nazwa użytkownika:</label><br>
+            <input type="text" id="username" name="login"><br>
+            <label for="password">Hasło:</label><br>
+            <input type="password" id="password" name="password"><br><br>
+
+            <input type="submit" class="btn-primary" formaction="loginProcess" value="Zaloguj się"
+                   style="width: 150px;height: 38px;display: block">
         </form>
     </div>
-
+</div>
+<br>
+<div align="center" style="color: red; font-size: medium">
+    ${errors}
 </div>
 
 </body>

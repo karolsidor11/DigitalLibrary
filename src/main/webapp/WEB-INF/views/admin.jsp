@@ -12,12 +12,20 @@
     <title>Witaj w panelu administratora</title>
 </head>
 <body>
+<h1 style="color: darkblue; text-align: center">Witaj w panelu administratora</h1>
 
 <h2>
     Lista uzytkowników
 </h2>
 
-<table>
+<a class="link" href="<c:url value="/addBook" />">
+    <button class="btn btn-primary" style="width: 150px">
+        Logowanie
+    </button>
+</a>
+
+
+<table border="1px">
     <tr>
         <td>Id</td>
         <td>Imię</td>
@@ -31,6 +39,10 @@
         </tr>
     </c:forEach>
 </table>
+
+<h3 style="color: red">
+    ${info}
+</h3>
 
 </body>
 </html>
