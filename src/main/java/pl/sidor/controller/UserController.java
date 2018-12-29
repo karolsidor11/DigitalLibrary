@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.sidor.dao.BookDao;
 import pl.sidor.dao.UserDao;
 import pl.sidor.model.Book;
@@ -17,6 +16,7 @@ public class UserController {
 
     private UserDao userDao;
     private BookDao bookDao;
+
 
     @Autowired
     public UserController(UserDao userDao, BookDao bookDao) {
@@ -32,7 +32,8 @@ public class UserController {
     // USUWANIE KONTA UŻYTKOWANIKA
     @GetMapping(value = "/deleteAccount")
     public String deleteAccount(Model model) {
-        userDao.delete(1);
+        int userID = getUserID();
+        userDao.delete(userID);
         model.addAttribute("info", "Twoje konto zostało pomyślnie usuniętę !!! ");
         return "home";
     }
@@ -66,9 +67,20 @@ public class UserController {
     @PostMapping("/newBook")
     public String newBook(Model model, @ModelAttribute Book book) {
 
+        User byName = userDao.findByName(LoginController.getThisUser().getName());
+
         bookDao.add(book);
+
+        model.addAttribute("user", byName);
         model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
         model.addAttribute("books", bookDao.findAll());
         return "userPanel";
+    }
+
+    //    Metoda zwracająca id zalogowanego użytkownika
+    private int getUserID() {
+
+        Integer id = LoginController.getThisUser().getId();
+        return id;
     }
 }

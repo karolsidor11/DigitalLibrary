@@ -25,7 +25,7 @@
 
 <%--NAGÓŁÓEWK--%>
 <h1 style="text-align: center;color: darkblue">
-    Witaj ${user.name}
+    Witaj ${user}
 </h1>
 
 <%--PANEL I --%>

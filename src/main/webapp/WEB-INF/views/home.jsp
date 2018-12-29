@@ -29,7 +29,7 @@
 
 <section style="text-align: center">
 
-    <a class="link" href="<c:url value="/login" />">
+    <a class="link" href="<c:url value="/userPanel" />">
         <button class="btn-primary" style="width: 150px">
             Logowanie
         </button>
@@ -48,7 +48,7 @@
 <br><br>
 
 <div align="center">
-    <img src="../../resources/images/spring.jpg" width="188" height="269"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="/images/spring.jpg" width="188" height="269"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <img src="../../resources/images/hibernate.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <img src="../../resources/images/git.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <img src="../../resources/images/java.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp

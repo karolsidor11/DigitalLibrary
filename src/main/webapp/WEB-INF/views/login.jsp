@@ -29,7 +29,7 @@
             <label for="password">Hasło:</label><br>
             <input type="password" id="password" name="password"><br><br>
 
-            <input type="submit" class="btn-primary" formaction="loginProcess" value="Zaloguj się"
+            <input type="submit" class="btn-primary" formaction="userPanel" value="Zaloguj się"
                    style="width: 150px;height: 38px;display: block">
         </form>
     </div>

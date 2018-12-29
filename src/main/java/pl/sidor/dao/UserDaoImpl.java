@@ -5,11 +5,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
+import pl.sidor.controller.LoginController;
 import pl.sidor.model.User;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Type;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -115,7 +114,7 @@ public class UserDaoImpl implements UserDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String query = "UPDATE  users SET name=?, email=?, login=?,password=? WHERE id=?";
-        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), 1};
+        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), LoginController.getThisUser().getId()};
 
         jdbcTemplate.update(query, name);
 

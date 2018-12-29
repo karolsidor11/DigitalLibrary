@@ -21,6 +21,11 @@ public class RegisterController {
 
     private BookDao bookDao;
     private UserDao userDao;
+    public static User getThisUser() {
+        return thisUser;
+    }
+
+    private static User thisUser;
 
 
     @Autowired

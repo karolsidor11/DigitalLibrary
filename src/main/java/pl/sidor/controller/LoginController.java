@@ -2,6 +2,8 @@ package pl.sidor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,13 @@ public class LoginController {
     private UserDao userDao;
     private BookDao bookDao;
 
+    public static User getThisUser() {
+        return thisUser;
+    }
+
+    private static User thisUser;
+
+
     @Autowired
     public LoginController(UserDao userDao, BookDao bookDao) {
         this.userDao = userDao;
@@ -29,6 +38,23 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String login() {
         return "login";
+    }
+
+
+    @GetMapping("/userPanel")
+    public String getUserPanel(Model model) {
+        List<User> allUsers = userDao.findAll();
+        List<Book> allBooks = bookDao.findAll();
+
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+
+
+        model.addAttribute("user", name);
+        model.addAttribute("books", allBooks);
+
+        return "userPanel";
     }
 
 
@@ -51,6 +77,7 @@ public class LoginController {
                 model.addAttribute("books", allBooks);
                 return "admin";
             }
+            thisUser = user;
             model.addAttribute("user", user);
             model.addAttribute("books", allBooks);
             return "userPanel";
