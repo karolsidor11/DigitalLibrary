@@ -48,10 +48,24 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 
+
         model.addAttribute("users", name);
         model.addAttribute("books", all);
 
         return "userPanel";
     }
 
+    @GetMapping("/badLogin")
+    public String badLogin(Model model) {
+        model.addAttribute("error", "Nieprawidłowy login lub hasło !!!");
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model) {
+        model.addAttribute("logout", "Zostałeś poprawnie wylogowany !!!");
+        System.out.println("Wylogowyawanie");
+        return "login";
+
+    }
 }

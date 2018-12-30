@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
@@ -7,7 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Panel rejestracji użytkownika</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css">
@@ -25,41 +26,60 @@
     </style>
 </head>
 <body style="background-color: lavender">
-
-<br>
 <h2 align="center" style="color: darkblue; font-size: 30px ;font-weight: normal">Zarejestruj się w Cyfrowej
     Bibliotece</h2>
-<br>
 
-<div id="panel">
-    <form method="post">
+<div id="panel" align="center">
 
-        <h3 style="text-align: center">Dane osobowe </h3>
-
-        <div align="center">
-            Wprowadź imię: &nbsp&nbsp <input type="text" name="name" placeholder="Imię"><br><br>
-            Wprowadź email : <input type="text" name="email" placeholder="Email"><br>
-        </div>
-        <br>
-        <h3 style="text-align: center"> Dane konta </h3>
-
-        <div align="center">
-            Wprowadź login : <input type="text" name="login" placeholder="Login "><br><br>
-            Wprowadź hasło : <input type="password" name="password" placeholder="Hasło"><br><br>
-            Potwierdź hasło : &nbsp <input type="password" placeholder="Powtórz hasło"><br>
-            <br>
-            <div id="lower">
-                <input class="btn-primary" type="submit" value="Zarejestruj się">
+    <sf:form method="post" modelAttribute="user">
+        <fieldset th:align="center" style="width: 25%; height: 70%; ">
+            <legend style="align-content: center; border-width: 2px;">Rejestracja</legend>
+            <h3 style="text-align: center">Dane osobowe </h3>
+            <div align="center">
+                Wprowadź imię: &nbsp&nbsp <sf:input path="name" title="Imię" maxlength="15"/><br><br>
+                Wprowadź email :<sf:input path="email" title="Email" maxlength="40"/> <br>
             </div>
 
-        </div>
-    </form>
-</div>
-<br>
-<div align="center" style="color: red;font-size: medium">
-    ${errors}
-</div>
+            <h3 style="text-align: center"> Dane konta </h3>
 
+            <div align="center">
+                Wprowadź login : <sf:input path="login" title="Login" maxlength="15"/><br><br>
+                Wprowadź hasło : <sf:password path="password" title="Hasło" maxlength="20"/> <br><br>
+                Potwierdź hasło: &nbsp; <input type="password" maxlength="20"><br>
+                <br>
+                <div id="lower">
+                    <input class="btn-primary" type="submit" value="Zarejestruj się">
+                </div>
+                <br><br>
+                <div style="color: red; font-size: 16px; font-weight:normal">
+                        ${errors}
+                </div>
+            </div>
+        </fieldset>
 
+        <%--<h3 style="text-align: center">Dane osobowe </h3>--%>
+        <%--<div align="center">--%>
+        <%--Wprowadź imię: &nbsp&nbsp <sf:input path="name" title="Imię" maxlength="15"/><br><br>--%>
+        <%--Wprowadź email :<sf:input path="email" title="Email" maxlength="40"/> <br>--%>
+        <%--</div>--%>
+
+        <%--<h3 style="text-align: center"> Dane konta </h3>--%>
+
+        <%--<div align="center">--%>
+        <%--Wprowadź login : <sf:input path="login" title="Login" maxlength="15"/><br><br>--%>
+        <%--Wprowadź hasło : <sf:input path="password" title="Hasło" maxlength="20"/> <br><br>--%>
+        <%--Potwierdź hasło: <input type="password" maxlength="20"><br>--%>
+        <%--<br>--%>
+        <%--<div id="lower">--%>
+        <%--<input class="btn-primary" type="submit" value="Zarejestruj się">--%>
+        <%--</div>--%>
+        <%--<br><br><br><br>--%>
+        <%--<div style="color: red; font-size: 25px">--%>
+        <%--${errors}--%>
+        <%--</div>--%>
+        <%--</div>--%>
+
+    </sf:form>
+</div>
 </body>
 </html>

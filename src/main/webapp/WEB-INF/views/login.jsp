@@ -29,13 +29,18 @@
     </style>
 </head>
 <body th:include="layout :: body" th:with="content=~{::content}" style="background-color: lavender">
-<br><br><br>
+
+<div align="center " style="color: red; font-size: 15px;">
+   ${logout}
+</div>
+
+<h2 align="center" style="color: darkblue; font-size: 30px ;font-weight: normal">Zaloguj się do swojego konta </h2>
 <div th:fragment="content" align="center">
     <form name="f" th:action="@{/login}" method="post">
         <fieldset th:align="center" style="width: 25%; height: 50%; ">
             <legend style="align-content: center; border-width: 2px;">Logowanie</legend>
             <br>
-            <div align="center" style="color: darkblue;font-size: 25px"> Zaloguj się do swojego konta</div>
+            <div align="center" style="color: darkblue;font-size: 25px"> Formularz logowania</div>
             <br><br>
 
             <label for="username">Nazwa użytkownika: </label><br>
@@ -47,6 +52,9 @@
                     Zaloguj się
                 </button>
             </div>
+            <br><br>
+            <div style="color:red; font-size: 15px;"> ${error} </div>
+
             <div th:if="${param.error}" class="alert alert-error">
                 <%--Nieprawidłowa nazwa użytkownika lub hasło.--%>
             </div>

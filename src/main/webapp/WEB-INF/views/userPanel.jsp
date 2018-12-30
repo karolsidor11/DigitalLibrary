@@ -26,10 +26,10 @@
 <%--NAGÓŁÓEWK--%>
 <h1 style="text-align: center;color: darkblue">
 
-    Witaj <p th:text="${users}"></p>
-
-
+     Witaj <p th:text="${users}"></p>
+    ${user.name}
 </h1>
+
 
 <%--PANEL I --%>
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
@@ -37,7 +37,7 @@
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
         :  <%=new java.util.Date().toLocaleString()%>
     </p><br>
-    <a href="<c:url value="/perform_logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
+    <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
             Wyloguj się
         </button>

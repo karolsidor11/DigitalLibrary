@@ -1,19 +1,25 @@
 package pl.sidor.model;
 
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class User {
 
 
     private Integer id;
     @NotEmpty
+    @Size(min = 5, max = 15, message = "Nazwa użytkownika musi zawierać min. 3 znaków !!!")
     private String name;
     @NotEmpty
+    @Email(message = "Niepoprawnie wpisany adres eamil !!!")
     private String email;
     @NotEmpty
+    @Size(min = 5, max = 15, message = "Login musi zawierać min. 5 znaków !!!")
     private String login;
     @NotEmpty
+    @Size(min = 5, max = 15, message = "Hasło musi zawierać min. 5 znaków !!!")
     private String password;
 
     public User() {

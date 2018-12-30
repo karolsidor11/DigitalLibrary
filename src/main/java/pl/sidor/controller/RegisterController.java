@@ -39,8 +39,8 @@ public class RegisterController {
 
 
     @GetMapping(value = "/register")
-    public String register() {
-
+    public String register(Model model) {
+        model.addAttribute("user", new User());
         return "register";
     }
 
@@ -54,16 +54,9 @@ public class RegisterController {
         }
 
         List<Book> all = bookService.findAll();
+        userService.add(user);
 
-        String name = user.getName();
-        String email = user.getEmail();
-        Integer id = user.getId();
-        String login = user.getLogin();
-        String password = user.getPassword();
-        User user1 = new User(id, name, email, login, password);
-        userService.add(user1);
-
-        model.addAttribute("user", user1);
+        model.addAttribute("user", user);
         model.addAttribute("books", all);
 
         return "userPanel";
