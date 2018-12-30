@@ -1,5 +1,7 @@
 package pl.sidor.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,21 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.sidor.dao.BookDao;
-import pl.sidor.dao.UserDao;
 import pl.sidor.service.BookService;
+import pl.sidor.service.UserService;
 
 @Controller
 public class AdminController {
 
-    private UserDao userDao;
-    private BookDao bookDao;
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+
+    private UserService userService;
     private BookService bookService;
 
     @Autowired
-    public AdminController(UserDao userDao, BookDao bookDao, BookService bookService) {
-        this.userDao = userDao;
-        this.bookDao = bookDao;
+    public AdminController(UserService userService, BookService bookService) {
+        this.userService = userService;
         this.bookService = bookService;
     }
 
@@ -34,7 +35,7 @@ public class AdminController {
 
     @GetMapping(value = "/manageUsers")
     public String addUser(Model model) {
-        model.addAttribute("users", userDao.findAll());
+        model.addAttribute("users", userService.findAll());
         return "manageUsers";
     }
 
@@ -42,10 +43,10 @@ public class AdminController {
     public String deleteUser(Model model, @RequestParam String id) {
 
         System.out.println(id);
-        userDao.delete(Integer.parseInt(id));
+        userService.delete(Integer.parseInt(id));
 
         model.addAttribute("info", "Użytkownik został pomyślnie usunięty !!!");
-        model.addAttribute("books", bookDao.findAll());
+        model.addAttribute("books", bookService.findAll());
         return "admin";
 
     }
@@ -53,7 +54,7 @@ public class AdminController {
     @GetMapping("/deleteBook/{id}")
     public String deleteBook(@PathVariable Integer id) {
 
-        bookService.deleteBook(id);
+//        bookService.deleteBook(id);
         return "admin";
 
     }

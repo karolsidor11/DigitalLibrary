@@ -42,18 +42,18 @@
             Rejestracja
         </button>
     </a>
-
+<a th></a>
 </section>
 
 <br><br>
 
 <div align="center">
-    <img src="/images/spring.jpg" width="188" height="269"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <img src="../../resources/images/hibernate.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <img src="../../resources/images/git.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <img src="../../resources/images/java.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <img src="../../resources/images/junit.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <img src="../../resources/images/maven.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/spring.jpg" width="188" height="269"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/hibernate.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/git.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/java.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/junit.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="resources/images/maven.jpg" width="188" height="269">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 </div>
 <br><br>
 <div align="center" style="font-size: 20px;color: red">

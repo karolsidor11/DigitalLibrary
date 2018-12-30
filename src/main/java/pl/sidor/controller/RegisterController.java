@@ -1,5 +1,7 @@
 package pl.sidor.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +9,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.sidor.dao.BookDao;
-import pl.sidor.dao.UserDao;
 import pl.sidor.model.Book;
 import pl.sidor.model.User;
+import pl.sidor.service.BookService;
+import pl.sidor.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,21 +20,23 @@ import java.util.List;
 @Controller
 public class RegisterController {
 
+    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
-    private BookDao bookDao;
-    private UserDao userDao;
+    private UserService userService;
+    private BookService bookService;
+
+    @Autowired
+    public RegisterController(UserService userService, BookService bookService) {
+        this.userService = userService;
+        this.bookService = bookService;
+    }
+
     public static User getThisUser() {
         return thisUser;
     }
 
     private static User thisUser;
 
-
-    @Autowired
-    public RegisterController(BookDao bookDao, UserDao userDao) {
-        this.bookDao = bookDao;
-        this.userDao = userDao;
-    }
 
     @GetMapping(value = "/register")
     public String register() {
@@ -49,7 +53,7 @@ public class RegisterController {
             return "register";
         }
 
-        List<Book> all = bookDao.findAll();
+        List<Book> all = bookService.findAll();
 
         String name = user.getName();
         String email = user.getEmail();
@@ -57,11 +61,12 @@ public class RegisterController {
         String login = user.getLogin();
         String password = user.getPassword();
         User user1 = new User(id, name, email, login, password);
-        userDao.add(user1);
+        userService.add(user1);
 
         model.addAttribute("user", user1);
         model.addAttribute("books", all);
 
         return "userPanel";
     }
+
 }

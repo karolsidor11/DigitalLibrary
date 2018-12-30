@@ -84,7 +84,6 @@
         </a>
     </div>
 
-
     <%--GŁOWNE OKO --%>
     <div align="center" style="float: left;width: 64%">
         <h2 align="center">Zarządznie biblioteką </h2>

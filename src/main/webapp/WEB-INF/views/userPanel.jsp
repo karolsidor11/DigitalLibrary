@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Panel użytkownika</title>
     <style>
@@ -25,7 +25,10 @@
 
 <%--NAGÓŁÓEWK--%>
 <h1 style="text-align: center;color: darkblue">
-    Witaj ${user}
+
+    Witaj <p th:text="${users}"></p>
+
+
 </h1>
 
 <%--PANEL I --%>
@@ -50,7 +53,7 @@
         <h3 align="center">Zarządznie kontem</h3>
 
 
-        <a class="link"href="<c:url value="/updateAccount" />">
+        <a class="link" href="<c:url value="/updateAccount" />">
             <button class="btn-primary" style="width: 150px ;border-radius: 5px">
                 Modyfikuj konto
             </button>
@@ -65,8 +68,8 @@
                 Dodaj książkę
             </button>
         </a><br><br>
-        <a class="link" title="Funkcja dostępna dla Administratora">
-            <button disabled class="btn-primary"
+        <a class="link" href="<c:url value="/findBook" />">
+            <button class="btn-primary"
                     style="width: 150px ;border-radius: 5px; background-color: grey; border-color: grey">
                 Modyfikuje książkę
             </button>
@@ -108,6 +111,7 @@
             </tr>
 
             <c:forEach items="${books}" var="book">
+
                 <tr>
                     <td>${book.id}</td>
                     <td>${book.title}</td>
@@ -117,6 +121,7 @@
                 </tr>
 
             </c:forEach>
+
 
             </tr>
 

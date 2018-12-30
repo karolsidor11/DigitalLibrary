@@ -1,27 +1,32 @@
 package pl.sidor.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.sidor.dao.BookDao;
-import pl.sidor.dao.UserDao;
 import pl.sidor.model.Book;
 import pl.sidor.model.User;
+import pl.sidor.service.BookService;
+import pl.sidor.service.UserService;
 
 @Controller
 public class UserController {
 
-    private UserDao userDao;
-    private BookDao bookDao;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private UserService userService;
+    private BookService bookService;
 
     @Autowired
-    public UserController(UserDao userDao, BookDao bookDao) {
-        this.userDao = userDao;
-        this.bookDao = bookDao;
+    public UserController(UserService userService, BookService bookService) {
+        this.userService = userService;
+        this.bookService = bookService;
     }
 
     @PostMapping(value = "/findBook")
@@ -33,7 +38,7 @@ public class UserController {
     @GetMapping(value = "/deleteAccount")
     public String deleteAccount(Model model) {
         int userID = getUserID();
-        userDao.delete(userID);
+        userService.delete(userID);
         model.addAttribute("info", "Twoje konto zostało pomyślnie usuniętę !!! ");
         return "home";
     }
@@ -48,10 +53,10 @@ public class UserController {
     @PostMapping(value = "/updateAccount")
     public String modifyAccount(Model model, @ModelAttribute User user) {
 
-        userDao.update(user);
+        userService.update(user);
 
         model.addAttribute("user", user);
-        model.addAttribute("books", bookDao.findAll());
+        model.addAttribute("books", bookService.findAll());
         model.addAttribute("info", "Zmiany na koncie zostały pomyślnie zapisane !!!");
 
         return "userPanel";
@@ -60,27 +65,38 @@ public class UserController {
 
     //    DODAWANIE NOWEJ KSIĄŻKI
     @GetMapping(value = "/addBooks")
-    public String addBook() {
+    public String addBook(Model model) {
+        model.addAttribute("books", "Przechodze do dodawanania  nowej książki");
+
         return "manageBooks";
     }
 
     @PostMapping("/newBook")
+
     public String newBook(Model model, @ModelAttribute Book book) {
 
-        User byName = userDao.findByName(LoginController.getThisUser().getName());
 
-        bookDao.add(book);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("user", byName);
+        String name = authentication.getName();
+
+        bookService.add(book);
+
+        model.addAttribute("user", name);
         model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
-        model.addAttribute("books", bookDao.findAll());
+        model.addAttribute("books", bookService.findAll());
         return "userPanel";
     }
 
     //    Metoda zwracająca id zalogowanego użytkownika
     private int getUserID() {
 
-        Integer id = LoginController.getThisUser().getId();
-        return id;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+
+        System.out.println(name);
+        User byName = userService.findByName(name);
+
+        return byName.getId();
     }
 }
