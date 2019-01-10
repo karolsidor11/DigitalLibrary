@@ -17,17 +17,14 @@ public class BookServiceImpl implements BookService {
         this.bookDao = bookDao;
     }
 
-
     @Override
-    public Book findByTitle(String title) {
-        Book byTitle = bookDao.findByTitle(title);
-        return byTitle;
+    public List<Book> findByTitle(String title) {
+        return bookDao.findByTitle(title);
     }
 
     @Override
     public List<Book> findAll() {
-        List<Book> all = bookDao.findAll();
-        return all;
+        return bookDao.findAll();
     }
 
     @Override

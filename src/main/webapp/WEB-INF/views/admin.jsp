@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Witaj w panelu administratora</title>
+    <title>Panel administratora</title>
     <style>
         .btn-primary {
             color: #fff;
@@ -24,7 +24,7 @@
 
 <%--NAGÓŁÓEWK--%>
 <h1 style="text-align: center;color: darkblue">
-    Panel Administratora
+    Witaj Administratorze
 </h1>
 
 <%--PANEL I --%>
@@ -33,7 +33,7 @@
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
         :  <%=new java.util.Date().toLocaleString()%>
     </p><br>
-    <a href="<c:url value="/perform_logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
+    <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
             Wyloguj się
         </button>
@@ -118,31 +118,66 @@
         </a><br>
 
         <%--LISTA DOSTĘPNYCH KSIAŻEK --%>
-        <h2 align="center">Lista dostępnych książek</h2>
 
-        <table border="1px">
-            <tr>
-                <td>Id</td>
-                <td>Tytuł</td>
-                <td>Autor</td>
-                <td>Ilość stron</td>
-                <td>ISBN</td>
-            </tr>
+        <c:if test="${books!=null}">
 
-            <c:forEach items="${books}" var="book">
+            <h2 align="center">Lista dostępnych książek</h2>
+
+            <table border="1px">
                 <tr>
-                    <td>${book.id}</td>
-                    <td>${book.title}</td>
-                    <td>${book.author}</td>
-                    <td>${book.pages}</td>
-                    <td>${book.isbn}</td>
+                    <td>Id</td>
+                    <td>Tytuł</td>
+                    <td>Autor</td>
+                    <td>Ilość stron</td>
+                    <td>ISBN</td>
                 </tr>
 
-            </c:forEach>
+                <c:forEach items="${books}" var="book">
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.pages}</td>
+                        <td>${book.isbn}</td>
+                    </tr>
 
-            </tr>
+                </c:forEach>
 
-        </table>
+                </tr>
+
+            </table>
+
+        </c:if>
+
+        <c:if test="${users!=null}">
+
+            <h2 align="center">Lista dostępnych książek</h2>
+
+            <table border="1px">
+                <tr>
+                    <td>Id</td>
+                    <td>Imię</td>
+                    <td>Email</td>
+                    <td>Login</td>
+                    <td>Hasło</td>
+                </tr>
+
+                <c:forEach items="${users}" var="user">
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.login}</td>
+                        <td>${user.password}</td>
+                    </tr>
+
+                </c:forEach>
+                </tr>
+
+            </table>
+
+        </c:if>
+
     </div>
 
 
@@ -161,7 +196,20 @@
             <button class="btn-primary" style="width: 150px ;border-radius: 5px">
                 Dodaj administratora
             </button>
-        </a><br><br><br><br><br>
+        </a><br><br>
+        <a href="/allBook">
+            <button class="btn-primary"
+                    style="width: 150px ;height: 35px;border-radius: 5px;background-color:green;border-color: green">
+                Wyświetl dostępne książki
+            </button>
+        </a><br><br>
+        <a href="/allUsers">
+            <button class="btn-primary"
+                    style="width: 150px ;height: 35px;border-radius: 5px;background-color:green;border-color: green">
+                Wyświetl dostępnych użytkowników
+            </button>
+        </a>
+        <br><br><br><br><br>
         <div align="center">
             <h4 style=" text-align: center">Komunikaty administracyjne : </h4>
             <h4 style="color: red; text-align: center">${info}</h4>

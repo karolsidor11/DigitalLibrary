@@ -27,9 +27,16 @@
 <body bgcolor="#e6e6fa">
 
 <%--NAGÓŁÓEWK--%>
-<h1 style="text-align: center;color: darkblue">
-    Zarządzanie użytkownikami
-</h1>
+<div>
+    <a href="<c:url value="/userPage" />">
+        <button class="btn-primary" style="background-color: green; border-radius: 5px">Wstecz</button>
+
+    </a>
+    <h1 style="text-align: center;color: darkblue">
+        Zarządzanie użytkownikami
+    </h1>
+</div>
+
 
 <%--PANEL I --%>
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
@@ -37,7 +44,7 @@
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
         :  <%=new java.util.Date().toLocaleString()%>
     </p><br>
-    <a href="<c:url value="/perform_logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
+    <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
             Wyloguj się
         </button>
@@ -70,13 +77,13 @@
                 Potwierdź hasło : &nbsp <input type="password" placeholder="Powtórz hasło"><br>
                 <br>
                 <div id="lower">
-                    <input class="btn-primary" type="submit" value="Dodaj">&nbsp&nbsp&nbsp
-                    <input class="btn-primary" type="submit" value="Modyfikuj">
+                    <input class="btn-primary" type="submit" formaction="<c:url value="/addUser"/> " value="Dodaj">&nbsp&nbsp&nbsp
+                    <input class="btn-primary" type="submit" formaction="<c:url value="modifyUser"/> "
+                           value="Modyfikuj">
                 </div>
 
             </div>
         </form>
-
 
     </div>
 
@@ -85,14 +92,19 @@
     <div align="center" style="float: left;width: 48%">
         <h2 align="center">Wyszukiwanie</h2>
 
-        <%--WYSZUKIWANIE KSIAŻKI--%>
-        <input type="text" name="book" placeholder="Wyszukaj użytkownika"
-               style="width: 240px; height: 45px; text-align: center ; font-size:18px ;border-radius: 5px"><br><br>
-        <a class="link" href="<c:url value="/findBook" />">
-            <button class="btn-primary" style="width: 150px ; height: 30px; ;border-radius: 5px">
-                Wyszukaj
-            </button>
-        </a><br><br><br>
+        <%--WYSZUKIWANIE UTKOWNIKA--%>
+        <form method="post">
+            <input type="text" name="user" placeholder="Wprowadź imię użytkownika"><br>
+            <input type="submit" formaction="<c:url value="/findUser"/> " value="Wyszukaj">
+
+        </form>
+        <%--<input type="text" name="user" placeholder="Wyszukaj użytkownika"--%>
+               <%--style="width: 240px; height: 45px; text-align: center ; font-size:18px ;border-radius: 5px"><br><br>--%>
+        <%--<a class="link" href="<c:url value="/findUser" />">--%>
+            <%--<button class="btn-primary" style="width: 150px ; height: 30px; ;border-radius: 5px">--%>
+                <%--Wyszukaj--%>
+            <%--</button>--%>
+        <%--</a><br><br><br>--%>
 
 
         <%--LISTA UŻYTKOWNIKÓW --%>
@@ -130,17 +142,16 @@
         <h2>Usuń / zablokuj użytkownika</h2>
 
 
-        <form method="post">
+        <form method="post" action="/deleteUser">
 
             <h4 style="text-align: center">Wprowadź id użytkownika </h4>
 
             <input type="text" name="id" align="center" placeholder="Wprowadź ID"><br><br>
-            <input class="btn-primary" type="submit"   formaction="/deleteUser" value="Zatwierdź">
+            <input class="btn-primary" type="submit" value="Zatwierdź">
 
         </form>
 
     </div>
-
 
 </section>
 

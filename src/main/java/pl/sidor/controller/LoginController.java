@@ -7,12 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.sidor.model.Book;
-import pl.sidor.model.User;
 import pl.sidor.service.BookService;
 import pl.sidor.service.UserService;
-
-import java.util.List;
 
 @Controller
 public class LoginController {
@@ -21,13 +17,6 @@ public class LoginController {
 
     private BookService bookService;
     private UserService userService;
-
-    public static User getThisUser() {
-        return thisUser;
-    }
-
-    private static User thisUser;
-
 
     public LoginController(BookService bookService, UserService userService) {
         this.bookService = bookService;
@@ -43,16 +32,12 @@ public class LoginController {
     @GetMapping("/userPanel")
     public String getUserPanel(Model model) {
 
-        List<Book> all = bookService.findAll();
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 
+        model.addAttribute("user", name);
 
-        model.addAttribute("users", name);
-        model.addAttribute("books", all);
-
-        return "userPanel";
+        return "userPage";
     }
 
     @GetMapping("/badLogin")
@@ -64,8 +49,20 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(Model model) {
         model.addAttribute("logout", "Zostałeś poprawnie wylogowany !!!");
-        System.out.println("Wylogowyawanie");
         return "login";
 
     }
+
+    @GetMapping(value = "/userPage")
+    public String home(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        if (name.equals("admin")) {
+            model.addAttribute("user", name);
+        } else {
+            model.addAttribute("user", name);
+        }
+        return "userPage";
+    }
+
 }

@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.sidor.model.Book;
 import pl.sidor.model.User;
 import pl.sidor.service.BookService;
 import pl.sidor.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -29,24 +32,50 @@ public class UserController {
         this.bookService = bookService;
     }
 
-    @PostMapping(value = "/findBook")
-    public String findBook() {
-        return "userPanel";
-    }
+//    //    WYSZUKIWANIE KSIĄŻKI
+//    @PostMapping(value = "/findBook")
+//    public String findBook(Model model, @RequestParam(value = "title") String title) {
+//        List<Book> byTitle = bookService.findByTitle(title);
+//        if (byTitle == null) {
+//            model.addAttribute("info", "Nie znaleziono książki o podanym tytule !!!");
+//            model.addAttribute("user", getName());
+//            return "userPage";
+//        }
+////        List<Book> books = new ArrayList<>();
+////        books.add(byTitle);
+//        model.addAttribute("books", byTitle);
+//        model.addAttribute("user", getName());
+//
+////        return "userPanel";
+//        return "userPage";
+//    }
+
+//    //    LISTA WSZYTSKICH KSIĄŻEK
+//    @GetMapping(value = "/allBooks")
+//    public String allBooks(Model model) {
+//        model.addAttribute("user", getName());
+//        model.addAttribute("books", bookService.findAll());
+////        return "userPanel";
+//        return "userPage";
+//    }
 
     // USUWANIE KONTA UŻYTKOWANIKA
     @GetMapping(value = "/deleteAccount")
     public String deleteAccount(Model model) {
-        int userID = getUserID();
-        userService.delete(userID);
-        model.addAttribute("info", "Twoje konto zostało pomyślnie usuniętę !!! ");
-        return "home";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Integer id = userService.findByName(name).getId();
+        userService.delete(id);
+        model.addAttribute("error", "Twoje konto zostało pomyślnie usuniętę !!! ");
+        return "redirect:/logout";
     }
 
 
     //    MODYFIKACJA KONTA UŻYTKOWNIKA
     @GetMapping(value = "updateAccount")
-    public String modifyAccount() {
+    public String modifyAccount(Model model) {
+        User byName = userService.findByName(getName());
+        model.addAttribute("user", byName);
         return "modifyAccount";
     }
 
@@ -55,48 +84,43 @@ public class UserController {
 
         userService.update(user);
 
-        model.addAttribute("user", user);
-        model.addAttribute("books", bookService.findAll());
+        model.addAttribute("user", user.getName());
         model.addAttribute("info", "Zmiany na koncie zostały pomyślnie zapisane !!!");
 
-        return "userPanel";
+//        return "userPanel";
+        return "userPage";
     }
 
 
-    //    DODAWANIE NOWEJ KSIĄŻKI
-    @GetMapping(value = "/addBooks")
-    public String addBook(Model model) {
-        model.addAttribute("books", "Przechodze do dodawanania  nowej książki");
+//    //    DODAWANIE NOWEJ KSIĄŻKI
+//    @GetMapping(value = "/addBooks")
+//    public String addBook(Model model) {
+//        model.addAttribute("books", "Przechodze do dodawanania  nowej książki");
+//        return "manageBooks";
+//    }
+//
+//    @PostMapping("/newBook")
+//    public String newBook(Model model, @ModelAttribute Book book, Errors errors) {
+//
+//        if (errors.hasErrors()) {
+//            model.addAttribute("error", "Nieprawidłowo wypełniony formularz !!!");
+//
+//            return "manageBooks";
+//        }
+//
+//        bookService.add(book);
+//
+//        model.addAttribute("user", getName());
+//        model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
+//        model.addAttribute("books", bookService.findAll());
+//
+////        return "userPanel";
+//        return "userPage";
+//    }
 
-        return "manageBooks";
-    }
-
-    @PostMapping("/newBook")
-
-    public String newBook(Model model, @ModelAttribute Book book) {
-
+    private String getName() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String name = authentication.getName();
-
-        bookService.add(book);
-
-        model.addAttribute("user", name);
-        model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
-        model.addAttribute("books", bookService.findAll());
-        return "userPanel";
-    }
-
-    //    Metoda zwracająca id zalogowanego użytkownika
-    private int getUserID() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-
-        System.out.println(name);
-        User byName = userService.findByName(name);
-
-        return byName.getId();
+        return authentication.getName();
     }
 }

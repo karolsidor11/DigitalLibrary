@@ -1,6 +1,7 @@
 package pl.sidor.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,10 +14,15 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class BookDaoImpl implements BookDao {
 
+    private static final String FIND_BY_TITLE_QUERY = "SELECT * FROM books WHERE TITLE LIKE ?";
+    private static final String FIND_ALL = "SELECT * FROM books";
+    private static final String ADD_NEW_BOOK = "INSERT INTO books VALUES (?,?,?,?,?)";
+    private static final String DELETE_BOOK = "DELETE FROM books WHERE id=?";
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private DataSource dataSource;
@@ -28,29 +34,30 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book findByTitle(String title) {
+    public List<Book> findByTitle(String title) {
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("title", title);
+        title = new StringBuffer(title).append("%").toString();
+        map.put("text", title);
 
-        String query = "SELECT * FROM books WHERE title=:title";
-        namedParameterJdbcTemplate.query(query, map, new BookMapper());
-        Book book = namedParameterJdbcTemplate.queryForObject(query, map, new BookMapper());
-
-        return book;
+        try {
+            List<Book> query1 = jdbcTemplate.query(FIND_BY_TITLE_QUERY, new Object[]{title}, new BookMapper());
+            return query1;
+        } catch (EmptyResultDataAccessException e) {
+            Optional.empty();
+            return null;
+        }
     }
+
 
     @Override
     public List<Book> findAll() {
 
-
         Map<String, Object> params = new HashMap<>();
 
-        String query = "SELECT * FROM books";
-
-        List<Book> result = namedParameterJdbcTemplate.query(query, params, new BookMapper());
-
-        return result;
+        return namedParameterJdbcTemplate.query(FIND_ALL, params, new BookMapper());
     }
 
     @Override
@@ -63,14 +70,15 @@ public class BookDaoImpl implements BookDao {
         String isbn = book.getIsbn();
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update("INSERT INTO books VALUES (?,?,?,?,?)", new Object[]{id,title,author,pages,isbn});
-
+        jdbcTemplate.update(ADD_NEW_BOOK, new Object[]{id, title, author, pages, isbn});
 
     }
 
     @Override
     public void delete(Integer id) {
 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(DELETE_BOOK, new Object[]{id});
     }
 
     @Override

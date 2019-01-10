@@ -25,34 +25,39 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: lavender">
 
 <br>
 <h2 align="center" style="color: darkblue; font-size: 30px ;font-weight: normal">Wprowadź zmiany w Twoim koncie</h2>
 <br>
-
-<div id="panel">
+<div align="center" id="panel">
     <form method="post">
 
-        <h3 style="text-align: center">Dane osobowe </h3>
+        <fieldset style="width: 25%; height: 70%; align-content: center ">
+            <legend style="align-content: center; border-width: 2px;">Modyfikacja konta użytkownika</legend>
 
-        <div align="center">
-            Wprowadź imię: &nbsp&nbsp <input type="text" name="name" placeholder="Imię"><br><br>
-            Wprowadź email : <input type="text" name="email" placeholder="Email"><br>
-        </div>
-        <br>
-        <h3 style="text-align: center"> Dane konta </h3>
+            <h3 style="text-align: center">Dane osobowe </h3>
 
-        <div align="center">
-            Wprowadź login : <input type="text" name="login" placeholder="Login "><br><br>
-            Wprowadź hasło : <input type="password" name="password" placeholder="Hasło"><br><br>
-            Potwierdź hasło : &nbsp <input type="password" placeholder="Powtórz hasło"><br>
-            <br>
-            <div id="lower">
-                <input class="btn-primary" type="submit" formaction="/updateAccount" value="Zatwierdź zmiany">
+            <div align="center">
+                Zmień imię: &nbsp&nbsp <input type="text" value="${user.name}" name="name" placeholder="Imię"><br><br>
+                Zmień email : <input type="text" name="email" value="${user.email}" placeholder="Email"><br>
             </div>
+            <br>
+            <h3 style="text-align: center"> Dane konta </h3>
 
-        </div>
+            <div align="center">
+                Zmień login : <input type="text" name="login" value="${user.login}" placeholder="Login "><br><br>
+                Zmień hasło : <input type="password" name="password" value="${user.password}"
+                                     placeholder="Hasło"><br><br>
+                Zmień hasło : &nbsp <input type="password" placeholder="Powtórz hasło"><br>
+                <br><br>
+                <div id="lower">
+                    <input class="btn-primary" type="submit" formaction="/updateAccount" value="Zatwierdź zmiany">
+                </div>
+
+            </div>
+        </fieldset>
+
     </form>
 </div>
 <br>

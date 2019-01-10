@@ -31,19 +31,11 @@ public class RegisterController {
         this.bookService = bookService;
     }
 
-    public static User getThisUser() {
-        return thisUser;
-    }
-
-    private static User thisUser;
-
-
     @GetMapping(value = "/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
-
 
     @PostMapping()
     public String registerIN(Model model, @Valid @ModelAttribute User user, Errors errors) {

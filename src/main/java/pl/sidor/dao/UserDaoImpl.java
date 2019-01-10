@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import pl.sidor.controller.LoginController;
 import pl.sidor.model.User;
 
 import javax.sql.DataSource;
@@ -19,10 +20,15 @@ import java.util.Map;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    private static final String FIND_BY_NAME = "SELECT * FROM users WHERE name=:name";
+    private static final String FIND_ALL_USERS = "SELECT * FROM users";
+    private static final String ADD_NEW_USER = "INSERT INTO USERS (id,name, email,login, password) VALUES(?,?,?,?,?)";
+    private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
+    private static final String UPDATE_USER = "UPDATE  users SET name=?, email=?, login=?,password=? WHERE id=?";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE login=:login AND password=:password";
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private DataSource dataSource;
-    private User user;
-
 
     @Autowired
     public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate, DataSource source) {
@@ -35,14 +41,9 @@ public class UserDaoImpl implements UserDao {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("name", name);
+//        List<User> query = namedParameterJdbcTemplate.query(FIND_BY_NAME, params, new UserMapper());
 
-        String sql = "SELECT * FROM users WHERE name=:name";
-
-        User result = namedParameterJdbcTemplate.queryForObject(sql, params, new UserMapper());
-
-        //new BeanPropertyRowMapper(Customer.class));
-
-        return result;
+        return namedParameterJdbcTemplate.queryForObject(FIND_BY_NAME, params, new UserMapper());
 
     }
 
@@ -51,11 +52,7 @@ public class UserDaoImpl implements UserDao {
 
         Map<String, Object> params = new HashMap<String, Object>();
 
-        String sql = "SELECT * FROM users";
-
-        List<User> result = namedParameterJdbcTemplate.query(sql, params, new UserMapper());
-
-        return result;
+        return namedParameterJdbcTemplate.query(FIND_ALL_USERS, params, new UserMapper());
 
     }
 
@@ -72,7 +69,8 @@ public class UserDaoImpl implements UserDao {
         int id = findAll().size() + 1;
 
         JdbcTemplate insert = new JdbcTemplate(dataSource);
-        insert.update("INSERT INTO USERS (id,name, email,login, password) VALUES(?,?,?,?,?)", new Object[]{id, user.getName(), user.getEmail(), user.getLogin(), user.getPassword()});
+//        insert.update(ADD_NEW_USER, new Object[]{id, user.getName(), user.getEmail(), user.getLogin(), user.getPassword()});
+        insert.update(ADD_NEW_USER, id, user.getName(), user.getEmail(), user.getLogin(), user.getPassword());
 
 
     }
@@ -85,39 +83,33 @@ public class UserDaoImpl implements UserDao {
         map.put("login", login);
         map.put("password", password);
 
-
-        String query = "SELECT * FROM users WHERE login=:login AND password=:password";
-
-
-        User user = namedParameterJdbcTemplate.queryForObject(query, map, new UserMapper());
+        User user = namedParameterJdbcTemplate.queryForObject(FIND_BY_LOGIN_AND_PASSWORD, map, new UserMapper());
 
         return user;
     }
 
     @Override
     public void delete(int id) {
-        Map<String, Object> map = new HashMap<>();
-//        map.put("id", id);
-//
-        String query = "DELETE FROM users WHERE id=?";
+
         Object[] params = {id};
         int[] types = {Types.BIGINT};
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        jdbcTemplate.update(query, params, types);
-
+        jdbcTemplate.update(DELETE_USER, params, types);
     }
 
     @Override
     public void update(User user) {
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String query = "UPDATE  users SET name=?, email=?, login=?,password=? WHERE id=?";
-        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), LoginController.getThisUser().getId()};
-
-        jdbcTemplate.update(query, name);
-
+//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String name1 = authentication.getName();
+//        Integer id = findByName(name1).getId();
+//
+//        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), id};
+//
+//        jdbcTemplate.update(UPDATE_USER, name);
 
     }
 
@@ -133,8 +125,6 @@ public class UserDaoImpl implements UserDao {
             user.setPassword(rs.getString("password"));
             return user;
 
-
         }
     }
-
 }

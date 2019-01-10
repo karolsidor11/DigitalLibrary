@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -28,7 +29,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("konrad").password("konrad").roles("USER")
+        auth.inMemoryAuthentication().withUser("Konrad").password("konrad").roles("USER")
                 .and().withUser("Karol").password("qwerty").roles("USER")
                 .and().withUser("admin").password("admin").roles("ADMIN");
 
@@ -60,6 +61,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**");
-
         }
 }

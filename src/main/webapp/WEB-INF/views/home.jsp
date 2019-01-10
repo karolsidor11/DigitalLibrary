@@ -3,6 +3,7 @@
 <head>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" type="text/css">
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css">
+
     <style>
         .btn-primary {
             color: #fff;
@@ -37,12 +38,12 @@
 
     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-    <a class="link" href="<c:url value="/register" />">
+    <a class="link"    href="<c:url value="/register" />">
         <button class="btn-primary" style="width: 150px">
             Rejestracja
         </button>
     </a>
-<a th></a>
+<a></a>
 </section>
 
 <br><br>
