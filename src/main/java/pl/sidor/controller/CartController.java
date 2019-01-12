@@ -53,6 +53,7 @@ public class CartController {
         model.addAttribute("user", getName());
         model.addAttribute("order", cartService.findAll());
         model.addAttribute("count", cartService.findAll().size());
+        model.addAttribute("info", "Brak zamówionych książek !!!");
         return "userPage";
 
     }

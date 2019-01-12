@@ -8,7 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>Panel użytkownika</title>
     <style>
@@ -26,7 +26,6 @@
 <%--NAGÓŁÓEWK--%>
 <h1 style="text-align: center;color: darkblue">
     Witaj ${user}
-    <p th:text="${user}"></p>
 </h1>
 
 <%--PANEL I --%>
@@ -245,7 +244,7 @@
                                 <td>
                                     <form method="post" action="/getBooks">
                                         <input type="hidden" name="book" value="${book.title}">
-                                        <input class="btn-primary" type="submit" value="Wypożycz">
+                                        <input class="btn-primary"   type="submit" value="Wypożycz">
                                     </form>
                                 </td>
                             </tr>
@@ -260,8 +259,12 @@
 
                     <%--Lista wypożyczonych książek--%>
 
+                <c:if test="${order==null}">
+                  ${info}
+                </c:if>
+
                 <c:if test="${order!=null}">
-                    <h2 align="center">Lista wypozyczonych książek</h2>
+                    <h2 align="center">Lista wypożyczonych książek</h2>
 
                     <table border="1px">
                         <tr>
@@ -348,8 +351,7 @@
             <div align="center">
                 <h3>Koszyk</h3>
                 <div>
-                    <h5>Liczba wypożyczonych książek :</h5>
-                    <h5> ${count}</h5>
+                    <h5>Liczba wypożyczonych książek : ${count}</h5>
                 </div>
                 <h3>Funkcje dodatkowe </h3>
 
