@@ -38,12 +38,12 @@
 
     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
-    <a class="link"    href="<c:url value="/register" />">
+    <a class="link" href="<c:url value="/register" />">
         <button class="btn-primary" style="width: 150px">
             Rejestracja
         </button>
     </a>
-<a></a>
+    <a></a>
 </section>
 
 <br><br>
@@ -58,7 +58,9 @@
 </div>
 <br><br>
 <div align="center" style="font-size: 20px;color: red">
-    ${info}
+    <h4>
+        ${info}
+    </h4>
 </div>
 
 </body>

@@ -8,8 +8,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html  xmlns:th="http://www.thymeleaf.org">
-<head >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
     <title>Panel użytkownika</title>
     <style>
         .btn-primary {
@@ -231,6 +231,7 @@
                             <td>Autor</td>
                             <td>Ilość stron</td>
                             <td>ISBN</td>
+                            <td>Zaznacz książkę</td>
                         </tr>
 
                         <c:forEach items="${books}" var="book">
@@ -241,6 +242,12 @@
                                 <td>${book.author}</td>
                                 <td>${book.pages}</td>
                                 <td>${book.isbn}</td>
+                                <td>
+                                    <form method="post" action="/getBooks">
+                                        <input type="hidden" name="book" value="${book.title}">
+                                        <input class="btn-primary" type="submit" value="Wypożycz">
+                                    </form>
+                                </td>
                             </tr>
 
                         </c:forEach>
@@ -248,7 +255,44 @@
                         </tr>
 
                     </table>
+
                 </c:if>
+
+                    <%--Lista wypożyczonych książek--%>
+
+                <c:if test="${order!=null}">
+                    <h2 align="center">Lista wypozyczonych książek</h2>
+
+                    <table border="1px">
+                        <tr>
+                            <td>Id</td>
+                            <td>Tytuł</td>
+                            <td>Autor</td>
+                            <td>Ilość stron</td>
+                            <td>ISBN</td>
+                            <td>Data wypożyczenia</td>
+                        </tr>
+
+                        <c:forEach items="${order}" var="book">
+
+                            <tr>
+                                <td>${book.id}</td>
+                                <td>${book.title}</td>
+                                <td>${book.author}</td>
+                                <td>${book.pages}</td>
+                                <td>${book.isbn}</td>
+                                <td><% new java.util.Date().toString(); %></td>
+                            </tr>
+
+                        </c:forEach>
+
+                        </tr>
+
+                    </table>
+
+                </c:if>
+
+
                 <br><br>
 
                 <div align="center" style="text-align: center; color: red; font-size: 20px; ">
@@ -302,6 +346,11 @@
 
 
             <div align="center">
+                <h3>Koszyk</h3>
+                <div>
+                    <h5>Liczba wypożyczonych książek :</h5>
+                    <h5> ${count}</h5>
+                </div>
                 <h3>Funkcje dodatkowe </h3>
 
                 <a href="/allBook">
@@ -309,10 +358,23 @@
                             style="width: 150px ;height: 35px;border-radius: 5px;background-color:green;border-color: green">
                         Wyświetl dostępne książki
                     </button>
+                </a><br><br>
+                <a href="/showOrder">
+                    <button class="btn-primary"
+                            style="width: 150px ;height: 35px;border-radius: 5px;background-color:green;border-color: green">
+                        Wyświetl zamówione książki
+                    </button>
+                </a><br><br>
+
+                <a href="/manageOrder">
+                    <button class="btn-primary"
+                            style="width: 150px ;height: 35px;border-radius: 5px;background-color:green;border-color: green">
+                        Zarządzanie zamówieniami
+                    </button>
                 </a>
-                <br><br><br><br><br>
+                <br><br><br>
                 <div align="center">
-                    <h4 style=" text-align: center">Komunikaty informacyje : </h4>
+                    <h4 style=" text-align: center">Komunikaty : </h4>
                     <h4 style="color: red; text-align: center">${info}</h4>
                 </div>
             </div>

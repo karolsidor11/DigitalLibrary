@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.sidor.model.Book;
 import pl.sidor.service.BookService;
+import pl.sidor.service.CartService;
 import pl.sidor.service.UserService;
 
 import java.util.List;
@@ -24,11 +25,14 @@ public class BookController {
     private static final Logger logger = LoggerFactory.getLogger(BookController.class);
     private BookService bookService;
     private UserService userService;
+    private CartService cartService;
+
 
     @Autowired
-    public BookController(BookService bookService, UserService userService) {
+    public BookController(BookService bookService, UserService userService, CartService cartService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     //    Lista wszytskich książek
@@ -36,6 +40,7 @@ public class BookController {
     public String allBooks(Model model) {
         model.addAttribute("books", bookService.findAll());
         model.addAttribute("user", getName());
+        model.addAttribute("count", cartService.findAll().size());
         return "userPage";
     }
 
@@ -43,7 +48,7 @@ public class BookController {
     @PostMapping(value = "/findBooks")
     public String findBooks(Model model, @RequestParam(value = "title") String title) {
         List<Book> byTitle = bookService.findByTitle(title);
-        if (byTitle == null) {
+        if (byTitle == null || byTitle.isEmpty()) {
             model.addAttribute("info", "Nie znaleziono książki o podanym tytule !!!");
             model.addAttribute("user", getName());
 
@@ -54,7 +59,6 @@ public class BookController {
 
         return "userPage";
     }
-
 
     //    Dodawanie książki
     @GetMapping(value = "/addBooks")
@@ -78,21 +82,6 @@ public class BookController {
         model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
         model.addAttribute("books", bookService.findAll());
 
-        return "userPage";
-    }
-
-    //    Usuwanie książki
-    @PostMapping(value = "/deleteBook")
-    public String deleteBook(Model model, @RequestParam("id") int id) {
-
-        bookService.delete(id);
-        model.addAttribute("info", "Książka została usunięta z biblioteki !!!");
-        return "userPage";
-
-    }
-
-    @PostMapping("/updateBook")
-    public String modifyBook() {
         return "userPage";
     }
 

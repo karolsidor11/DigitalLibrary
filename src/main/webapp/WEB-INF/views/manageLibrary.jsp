@@ -48,15 +48,15 @@
 <%--PANEL GŁOWNY --%>
 <section>
 
-    <%--DODAJ/ MODYFIKUJ UŻYTKOWNIKA --%>
+    <%--DODAJ/ MODYFIKUJ KSIĄŻKE --%>
     <div align="center"
          style=" float:left;width: 25%;height: 85%; border-right-style: outset;border-color: blueviolet; border-width: 2px">
-        <h2 align="center">Dodaj / Modyfikuj książkę </h2>
+        <h2 align="center" style="color:darkblue;">Dodaj / Modyfikuj książkę </h2>
 
         <div align="center">
             <form method="post">
-                <fieldset style="width: 25%; height: 50%; align-content: center ">
-                    <legend style="align-content: center; border-width: 2px;">Dodawanie książki</legend>
+                <fieldset style="width: 75%; height: 65%; align-content: center ">
+                    <%--<legend style="align-content: center; border-width: 2px;">Dodawanie książki</legend>--%>
                     <label for="title">Wprowadź tytuł:</label><br>
                     <input type="text" id="title" name="title"><br>
                     <label for="author">Wprowadź autora:</label><br>
@@ -66,7 +66,10 @@
                     <label for="isbn">Wprowadź numer ISBN:</label><br>
                     <input type="text" id="isbn" name="isbn"><br><br>
 
-                    <input type="submit" class="btn-primary" formaction="/newBook" value="Zatwierdź"
+                    <input type="submit" class="btn-primary" formaction="<c:url value="/insertBook"/> " value="Dodaj"
+                           style="width: 150px;height: 35px;display: block">&nbsp;&nbsp;
+                    <input type="submit" class="btn-primary" formaction="<c:url value="/modifyBook"/> "
+                           value="Modyfikuj"
                            style="width: 150px;height: 35px;display: block">
                 </fieldset>
                 <br><br>
@@ -79,23 +82,9 @@
 
     </div>
 
-
     <%--GŁOWNE OKO --%>
     <div align="center" style="float: left;width: 48%">
-        <h2 align="center">Wyszukiwanie</h2>
-
-        <%--WYSZUKIWANIE KSIAŻKI--%>
-        <input type="text" name="book" placeholder="Wyszukaj książke"
-               style="width: 240px; height: 45px; text-align: center ; font-size:18px ;border-radius: 5px"><br><br>
-        <a class="link" href="<c:url value="/findBooks" />">
-            <button class="btn-primary" style="width: 150px ; height: 30px; ;border-radius: 5px">
-                Wyszukaj
-            </button>
-        </a><br><br><br>
-
-
-        <%--LISTA UŻYTKOWNIKÓW --%>
-        <h3 align="center" style="color: #0b2e13">Lista książek</h3>
+        <h2 align="center" style="color: darkblue">Lista dostępnych książek</h2>
 
         <table border="1px">
             <tr>
@@ -104,15 +93,17 @@
                 <td>Autor</td>
                 <td>Ilość stron</td>
                 <td>ISBN</td>
+                <td>Zaznacz</td>
             </tr>
 
             <c:forEach items="${books}" var="book">
                 <tr>
                     <td>${book.id}</td>
-                    <td>${book.title}</td>
+                    <td><a href="<c:url value="/getBook"/> " name="${book.title}">${book.title}</a></td>
                     <td>${book.author}</td>
                     <td>${book.pages}</td>
                     <td>${book.isbn}</td>
+                    <td><input type="checkbox"></td>
                 </tr>
 
             </c:forEach>
@@ -123,20 +114,24 @@
 
     </div>
 
-    <%--ZARZADZENIE  PROFILEM --%>
+    <%--Usuwanie książki --%>
     <div align="center"
          style=" float:left;width: 25%;height: 85%; border-left-style: outset;border-color: blueviolet; border-width: 2px">
-        <h2>Usuń książkę</h2>
-
+        <h2 style="color: darkblue">Usuń książkę</h2>
 
         <form method="post" action="<c:url value="/deleteBook"/> ">
 
             <h4 style="text-align: center">Wprowadź id książki </h4>
 
             <input type="text" name="id" align="center" placeholder="Wprowadź ID"><br><br>
-            <input class="btn-primary" type="submit"  value="Zatwierdź">
+            <input class="btn-primary" type="submit" value="Zatwierdź">
 
         </form>
+        <br><br><br><br>
+        <div>
+            <h4> Komunikaty:</h4>
+            <p style="color: red">${info} </p>
+        </div>
 
     </div>
 

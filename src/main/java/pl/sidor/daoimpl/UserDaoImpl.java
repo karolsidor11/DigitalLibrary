@@ -1,12 +1,11 @@
-package pl.sidor.dao;
+package pl.sidor.daoimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import pl.sidor.dao.UserDao;
 import pl.sidor.model.User;
 
 import javax.sql.DataSource;

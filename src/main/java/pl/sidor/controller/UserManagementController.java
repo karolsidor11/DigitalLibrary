@@ -46,15 +46,16 @@ public class UserManagementController {
     public String addUser(Model model, @Valid @ModelAttribute User user, Errors errors) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("error", "Nieprawidłowo wypełniony formularz !!!");
+            model.addAttribute("info", "Nieprawidłowo wypełniony formularz !!!");
             model.addAttribute("books", bookService.findAll());
             return "manageUsers";
         }
         userService.add(user);
         model.addAttribute("user", getName());
-        model.addAttribute("info", "Użytkownik został pomyślnie dadany do bazy danych !!!");
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("info", "Użytkownik został pomyślnie dodany do bazy danych !!!");
 
-        return "userPage";
+        return "manageUsers";
     }
 
     //    Usuwanie użytkownika
@@ -65,9 +66,10 @@ public class UserManagementController {
         userService.delete(Integer.parseInt(id));
 
         model.addAttribute("info", "Użytkownik został pomyślnie usunięty !!!");
-        model.addAttribute("books", bookService.findAll());
+        model.addAttribute("users", userService.findAll());
         model.addAttribute("user", getName());
-        return "userPage";
+        return "manageUsers";
+//        return "userPage";
 
     }
 

@@ -59,7 +59,6 @@
          style=" float:left;width: 25%;height: 85%; border-right-style: outset;border-color: blueviolet; border-width: 2px">
         <h2 align="center">Dodaj / Modyfikuj użytkownika </h2>
 
-
         <form method="post">
 
             <h4 style="text-align: center">Dane osobowe </h4>
@@ -90,25 +89,7 @@
 
     <%--GŁOWNE OKO --%>
     <div align="center" style="float: left;width: 48%">
-        <h2 align="center">Wyszukiwanie</h2>
-
-        <%--WYSZUKIWANIE UTKOWNIKA--%>
-        <form method="post">
-            <input type="text" name="user" placeholder="Wprowadź imię użytkownika"><br>
-            <input type="submit" formaction="<c:url value="/findUser"/> " value="Wyszukaj">
-
-        </form>
-        <%--<input type="text" name="user" placeholder="Wyszukaj użytkownika"--%>
-               <%--style="width: 240px; height: 45px; text-align: center ; font-size:18px ;border-radius: 5px"><br><br>--%>
-        <%--<a class="link" href="<c:url value="/findUser" />">--%>
-            <%--<button class="btn-primary" style="width: 150px ; height: 30px; ;border-radius: 5px">--%>
-                <%--Wyszukaj--%>
-            <%--</button>--%>
-        <%--</a><br><br><br>--%>
-
-
-        <%--LISTA UŻYTKOWNIKÓW --%>
-        <h3 align="center" style="color: #0b2e13">Lista użytkowników</h3>
+        <h2 align="center">Lista użytkowników</h2>
 
         <table border="1px">
             <tr>
@@ -150,6 +131,11 @@
             <input class="btn-primary" type="submit" value="Zatwierdź">
 
         </form>
+        <br><br><br><br>
+        <div>
+            <h4>Komunikaty:</h4>
+            <p style="color: red">${info} </p>
+        </div>
 
     </div>
 
