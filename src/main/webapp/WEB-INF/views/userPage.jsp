@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
@@ -32,7 +33,7 @@
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
 
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
-        :  <%=new java.util.Date().toString()%>
+        :  ${actualDate} ${actualData}
     </p><br>
     <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
@@ -46,7 +47,7 @@
 
     <%--ZARZADZANIE KONTEM --%>
     <div align="center"
-         style=" float:left;width: 17%;height: 85%; border-right-style: outset;border-color: blueviolet; border-width: 2px">
+         style=" float:left;width: 17%;height: 100%; border-right-style: outset;border-color: blueviolet; border-width: 2px">
 
         <security:authorize access="hasRole('ROLE_ADMIN')">
             <h3 align="center">Zarządznie użytkownikami </h3>
@@ -158,6 +159,7 @@
                         <td>Autor</td>
                         <td>Ilość stron</td>
                         <td>ISBN</td>
+                        <td>Modyfikacja</td>
                     </tr>
 
                     <c:forEach items="${books}" var="book">
@@ -167,6 +169,10 @@
                             <td>${book.author}</td>
                             <td>${book.pages}</td>
                             <td>${book.isbn}</td>
+                            <td><sf:form>
+                                <input type="hidden" value="${book.title}" name="book">
+                                <input class="btn-primary" type="submit" formaction="updateBook" value="Modyfikuj">
+                            </sf:form></td>
                         </tr>
 
                     </c:forEach>
@@ -212,7 +218,7 @@
 
             <%--GŁOWNE OKO --%>
             <div align="center" style="float: left; width: 100%">
-                <h3 align="center">Wyszukaj książkę </h3>
+                <h2 align="center">Wyszukaj książkę </h2>
                 <form method="post" action="/findBooks">
                     <input type="text" name="title" placeholder="Podaj tytuł książki"
                            style="width: 240px; height: 45px; text-align: center ; font-size:18px ;border-radius: 5px"><br><br>
@@ -244,7 +250,7 @@
                                 <td>
                                     <form method="post" action="/getBooks">
                                         <input type="hidden" name="book" value="${book.title}">
-                                        <input class="btn-primary"   type="submit" value="Wypożycz">
+                                        <input class="btn-primary" type="submit" value="Wypożycz">
                                     </form>
                                 </td>
                             </tr>
@@ -257,11 +263,6 @@
 
                 </c:if>
 
-                    <%--Lista wypożyczonych książek--%>
-
-                <c:if test="${order==null}">
-                  ${info}
-                </c:if>
 
                 <c:if test="${order!=null}">
                     <h2 align="center">Lista wypożyczonych książek</h2>
@@ -273,7 +274,6 @@
                             <td>Autor</td>
                             <td>Ilość stron</td>
                             <td>ISBN</td>
-                            <td>Data wypożyczenia</td>
                         </tr>
 
                         <c:forEach items="${order}" var="book">
@@ -284,7 +284,6 @@
                                 <td>${book.author}</td>
                                 <td>${book.pages}</td>
                                 <td>${book.isbn}</td>
-                                <td><% new java.util.Date().toString(); %></td>
                             </tr>
 
                         </c:forEach>
@@ -295,32 +294,29 @@
 
                 </c:if>
 
-
                 <br><br>
 
-                <div align="center" style="text-align: center; color: red; font-size: 20px; ">
-                        ${info}
-                </div>
             </div>
         </security:authorize>
 
     </div>
 
 
+
     <%--ZARZADZENIE  PROFILEM --%>
     <div align="center"
-         style=" float:left;width: 17%;height: 85%; border-left-style: outset;border-color: blueviolet; border-width: 2px">
+         style=" float:left;width: 17%;height: 100%; border-left-style: outset;border-color: blueviolet; border-width: 2px">
 
         <security:authorize access="hasRole('ROLE_ADMIN')">
             <h3>Zarządznie profilem</h3>
 
-            <a class="link" href="<c:url value="/updateAccount" />">
+            <a class="link" href="<c:url value="/modifyAdminAccount" />">
                 <button class="btn-primary" style="width: 150px ;border-radius: 5px">
                     Modyfikuj konto
                 </button>
             </a><br><br>
 
-            <a class="link" href="<c:url value="/updateAccount" />">
+            <a class="link" href="<c:url value="/addNewAdmin" />">
                 <button class="btn-primary" style="width: 150px ;border-radius: 5px">
                     Dodaj administratora
                 </button>
@@ -349,7 +345,7 @@
 
 
             <div align="center">
-                <h3>Koszyk</h3>
+                <h3 style="color: #533f03">KOSZYK</h3>
                 <div>
                     <h5>Liczba wypożyczonych książek : ${count}</h5>
                 </div>

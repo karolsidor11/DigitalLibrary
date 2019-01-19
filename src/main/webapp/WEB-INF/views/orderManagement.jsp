@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
@@ -36,7 +37,7 @@
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
 
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
-        :  <%=new java.util.Date().toLocaleString()%>
+        :  ${actualDate}
     </p><br>
     <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
@@ -52,6 +53,10 @@
     <div align="center"
          style=" float:left;width: 42%;height: 100%; border-right-style: outset;border-color: blueviolet; border-width: 2px">
         <h2 align="center" style="color:darkblue;">Zamów książkę </h2>
+
+        <c:if test="${order==null}">
+            ${info}
+        </c:if>
 
         <div align="center">
             <c:if test="${books!=null}">
@@ -125,6 +130,15 @@
                 </tr>
 
             </table>
+
+            <br><br><br>
+            <sf:form method="post">
+                <input type="hidden" name="user" value="${user}">
+                <input type="hidden" name="dateOfReturn" value="do dnia">
+                <input type="submit" class="btn-primary"
+                       style=" font-size:20px; border-radius:5px; height: 40px; width: 200px;" value="Złóż zamówienie"
+                       formaction="<c:url value="/makeOrder"/> ">
+            </sf:form>
         </c:if>
 
 

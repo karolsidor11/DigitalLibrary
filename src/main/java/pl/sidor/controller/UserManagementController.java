@@ -33,32 +33,33 @@ public class UserManagementController {
         this.userService = userService;
     }
 
-    //    Lista wszytskich użytkowników
     @GetMapping(value = "/allUsers")
     public String allUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user", getName());
+        model.addAttribute("actualDate",LoginController.getActualDate());
         return "userPage";
     }
 
-    //    Dodawanie użytkownika
     @PostMapping(value = "/addUser")
     public String addUser(Model model, @Valid @ModelAttribute User user, Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("info", "Nieprawidłowo wypełniony formularz !!!");
             model.addAttribute("books", bookService.findAll());
+            model.addAttribute("actualDate",LoginController.getActualDate());
+            model.addAttribute("users", userService.findAll());
             return "manageUsers";
         }
         userService.add(user);
         model.addAttribute("user", getName());
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("actualDate",LoginController.getActualDate());
         model.addAttribute("info", "Użytkownik został pomyślnie dodany do bazy danych !!!");
 
         return "manageUsers";
     }
 
-    //    Usuwanie użytkownika
     @PostMapping("/deleteUser")
     public String deleteUser(Model model, @RequestParam String id) {
 
@@ -67,10 +68,10 @@ public class UserManagementController {
 
         model.addAttribute("info", "Użytkownik został pomyślnie usunięty !!!");
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("actualDate",LoginController.getActualDate());
         model.addAttribute("user", getName());
-        return "manageUsers";
-//        return "userPage";
 
+        return "manageUsers";
     }
 
     @PostMapping(value = "findUser")
@@ -81,6 +82,7 @@ public class UserManagementController {
 
         model.addAttribute("users", userList);
         model.addAttribute("user", getName());
+        model.addAttribute("actualDate",LoginController.getActualDate());
         return "manageUsers";
     }
 

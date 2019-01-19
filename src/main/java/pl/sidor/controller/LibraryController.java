@@ -33,13 +33,12 @@ public class LibraryController {
 
         if (errors.hasErrors()) {
             model.addAttribute("error", "Nieprawidłowo wypełniony formularz !!!");
-
             return "manageLibrary";
         }
-
         bookService.add(book);
 
         model.addAttribute("info", "Książka pomyślnie została dodana do zasobów !!!");
+        model.addAttribute("actualDate",LoginController.getActualDate());
         model.addAttribute("books", bookService.findAll());
 
         return "manageLibrary";
@@ -48,6 +47,7 @@ public class LibraryController {
     @GetMapping(value = "/getBook")
     public String getBook(Model model) {
         model.addAttribute("books", bookService.findAll());
+        model.addAttribute("actualDate",LoginController.getActualDate());
 
         return "manageLibrary";
     }
@@ -55,16 +55,17 @@ public class LibraryController {
     @PostMapping(value = "modifyBook")
     public String modifyBook(Model model) {
         model.addAttribute("books", bookService.findAll());
+        model.addAttribute("actualDate",LoginController.getActualDate());
 
         return "manageLibrary";
     }
 
-    //    Usuwanie książki
     @PostMapping(value = "/deleteBook")
     public String deleteBook(Model model, @RequestParam("id") int id) {
 
         bookService.delete(id);
         model.addAttribute("books", bookService.findAll());
+        model.addAttribute("actualDate",LoginController.getActualDate());
 
         model.addAttribute("info", "Książka została usunięta z biblioteki !!!");
 

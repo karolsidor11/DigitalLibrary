@@ -8,5 +8,7 @@
 
 <h2>${userKonrad}</h2>
 
+<a href="generate/pdf.htm">Generate Pdf</a>
+
 </body>
 </html>

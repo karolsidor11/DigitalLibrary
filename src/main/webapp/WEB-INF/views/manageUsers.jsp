@@ -42,7 +42,7 @@
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
 
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
-        :  <%=new java.util.Date().toLocaleString()%>
+        :  ${actualDate}
     </p><br>
     <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
@@ -77,7 +77,7 @@
                 <br>
                 <div id="lower">
                     <input class="btn-primary" type="submit" formaction="<c:url value="/addUser"/> " value="Dodaj">&nbsp&nbsp&nbsp
-                    <input class="btn-primary" type="submit" formaction="<c:url value="modifyUser"/> "
+                    <input class="btn-primary" type="submit" formaction="<c:url value="/modifyUser"/> "
                            value="Modyfikuj">
                 </div>
 

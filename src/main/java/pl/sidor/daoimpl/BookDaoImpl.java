@@ -24,6 +24,7 @@ public class BookDaoImpl implements BookDao {
     private static final String FIND_ALL = "SELECT * FROM books";
     private static final String ADD_NEW_BOOK = "INSERT INTO books VALUES (?,?,?,?,?)";
     private static final String DELETE_BOOK = "DELETE FROM books WHERE id=?";
+    private static final String UPDATE_BOOK = "UPDATE  books SET title=?, author=?, pages=?, isbn=? WHERE id=?";
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private DataSource dataSource;
@@ -83,7 +84,18 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void update(Integer id) {
+    public void update(Book book) {
+        List<Book> byTitle = findByTitle(book.getTitle());
+        Book book1 = byTitle.get(0);
+
+        book1.setTitle(book.getTitle());
+        book1.setAuthor(book.getAuthor());
+        book1.setPages(book.getPages());
+        book1.setIsbn(book.getIsbn());
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(UPDATE_BOOK, new Object[]{book1.getTitle(), book1.getAuthor(), book1.getPages(), book1.getIsbn(), book1.getId()});
+
 
     }
 

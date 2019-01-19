@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import pl.sidor.service.BookService;
 import pl.sidor.service.UserService;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 @Controller
 public class LoginController {
 
@@ -32,10 +37,8 @@ public class LoginController {
     @GetMapping("/userPanel")
     public String getUserPanel(Model model) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-
-        model.addAttribute("user", name);
+        model.addAttribute("user", getName());
+        model.addAttribute("actualData", getActualDate());
 
         return "userPage";
     }
@@ -55,14 +58,27 @@ public class LoginController {
 
     @GetMapping(value = "/userPage")
     public String home(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        if (name.equals("admin")) {
-            model.addAttribute("user", name);
+
+        if (getName().equals("admin")) {
+            model.addAttribute("user", getName());
+            model.addAttribute("actualDate",LoginController.getActualDate());
         } else {
-            model.addAttribute("user", name);
+            model.addAttribute("user", getName());
+            model.addAttribute("actualDate",LoginController.getActualDate());
         }
         return "userPage";
+    }
+
+    private String getName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+    public static String getActualDate(){
+        Date date= new Date();
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+
+        return sdf.format(date);
+
     }
 
 }

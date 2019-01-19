@@ -35,7 +35,6 @@ public class CartController {
 
     @PostMapping(value = "getBooks")
     public String takeBook(Model model, @RequestParam String book) {
-        System.out.println("tytuł" + book);
         List<Book> byTitle = bookService.findByTitle(book);
         cartService.addOrder(byTitle.get(0));
 
@@ -45,6 +44,7 @@ public class CartController {
         model.addAttribute("books", bookService.findAll());
         model.addAttribute("user", getName());
         model.addAttribute("count", cartService.findAll().size());
+        model.addAttribute("actualDate",LoginController.getActualDate());
         return "userPage";
     }
 
@@ -54,13 +54,11 @@ public class CartController {
         model.addAttribute("order", cartService.findAll());
         model.addAttribute("count", cartService.findAll().size());
         model.addAttribute("info", "Brak zamówionych książek !!!");
+        model.addAttribute("actualDate",LoginController.getActualDate());
         return "userPage";
-
     }
-
     private String getName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
-
 }

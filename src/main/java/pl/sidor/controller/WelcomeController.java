@@ -28,7 +28,6 @@ public class WelcomeController {
     public String home() {
 
         return "home";
-
     }
 
     @GetMapping(value = "/find")
@@ -42,5 +41,4 @@ public class WelcomeController {
         return "welcome";
 
     }
-
 }

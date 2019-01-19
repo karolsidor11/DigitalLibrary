@@ -14,6 +14,6 @@ public interface BookDao {
 
     void delete(Integer id);
 
-    void update(Integer id);
+    void update(Book book);
 
 }

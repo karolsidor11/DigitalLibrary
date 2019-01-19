@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import pl.sidor.dao.UserDao;
 import pl.sidor.model.User;
@@ -101,14 +103,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void update(User user) {
 
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String name1 = authentication.getName();
-//        Integer id = findByName(name1).getId();
-//
-//        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), id};
-//
-//        jdbcTemplate.update(UPDATE_USER, name);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name1 = authentication.getName();
+        Integer id = findByName(name1).getId();
+
+        Object[] name = {user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), id};
+
+        jdbcTemplate.update(UPDATE_USER, name);
 
     }
 

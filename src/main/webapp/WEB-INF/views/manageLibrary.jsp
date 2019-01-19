@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
@@ -36,7 +37,7 @@
 <section style="height: 8% ; border-bottom-style: outset ; border-bottom-color: blueviolet;border-bottom-width: 2px">
 
     <p style="position: absolute;left: 50px; float: left;font-weight: bold; font-size: 20px">Aktualna data
-        :  <%=new java.util.Date().toLocaleString()%>
+        : ${actualDate}
     </p><br>
     <a href="<c:url value="/logout" /> " style="position: absolute;right: 50px;margin-bottom: 1px">
         <button class="btn-primary" style="width: 150px;border-radius: 5px">
@@ -58,17 +59,18 @@
                 <fieldset style="width: 75%; height: 65%; align-content: center ">
                     <%--<legend style="align-content: center; border-width: 2px;">Dodawanie książki</legend>--%>
                     <label for="title">Wprowadź tytuł:</label><br>
-                    <input type="text" id="title" name="title"><br>
+                    <input type="text" value="${updateBook.title}" id="title" name="title"><br>
                     <label for="author">Wprowadź autora:</label><br>
-                    <input type="text" id="author" name="author"><br>
+                    <input type="text" value="${updateBook.author}" id="author" name="author"><br>
                     <label for="pages">Wprowadź ilość stron:</label><br>
-                    <input type="text" id="pages" name="pages"><br>
+                    <input type="text" value="${updateBook.pages}" id="pages" name="pages"><br>
                     <label for="isbn">Wprowadź numer ISBN:</label><br>
-                    <input type="text" id="isbn" name="isbn"><br><br>
+                    <input type="text" value="${updateBook.isbn}" id="isbn" name="isbn"><br><br>
+                    <input type="hidden" value="${updateBook.id}" name="id">
 
                     <input type="submit" class="btn-primary" formaction="<c:url value="/insertBook"/> " value="Dodaj"
                            style="width: 150px;height: 35px;display: block">&nbsp;&nbsp;
-                    <input type="submit" class="btn-primary" formaction="<c:url value="/modifyBook"/> "
+                    <input type="submit" class="btn-primary" formaction="<c:url value="/modifiedBook"/> "
                            value="Modyfikuj"
                            style="width: 150px;height: 35px;display: block">
                 </fieldset>
@@ -93,17 +95,20 @@
                 <td>Autor</td>
                 <td>Ilość stron</td>
                 <td>ISBN</td>
-                <td>Zaznacz</td>
+                <td>Modyfikuj</td>
             </tr>
 
             <c:forEach items="${books}" var="book">
                 <tr>
                     <td>${book.id}</td>
-                    <td><a href="<c:url value="/getBook"/> " name="${book.title}">${book.title}</a></td>
+                    <td>${book.title}</td>
                     <td>${book.author}</td>
                     <td>${book.pages}</td>
                     <td>${book.isbn}</td>
-                    <td><input type="checkbox"></td>
+                    <td><sf:form>
+                        <input type="hidden" name="book" value="${book.title}">
+                        <input class="btn-primary" type="submit" formaction="updateBook" value="Modyfikuj">
+                    </sf:form></td>
                 </tr>
 
             </c:forEach>

@@ -39,6 +39,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
+
 //    @Bean
 //    public ViewResolver viewResolver(SpringTemplateEngine templateEngine) {
 //        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();

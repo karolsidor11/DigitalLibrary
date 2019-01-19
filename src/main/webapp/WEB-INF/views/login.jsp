@@ -55,12 +55,12 @@
             <br><br>
             <div style="color:red; font-size: 15px;"> ${error}</div>
 
-            <div th:if="${param.error}" class="alert alert-error">
-                <%--Nieprawidłowa nazwa użytkownika lub hasło.--%>
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                <%--Zostałeś wylogowany.--%>
-            </div>
+            <%--<div th:if="${param.error}" class="alert alert-error">--%>
+                <%--&lt;%&ndash;Nieprawidłowa nazwa użytkownika lub hasło.&ndash;%&gt;--%>
+            <%--</div>--%>
+            <%--<div th:if="${param.logout}" class="alert alert-success">--%>
+                <%--&lt;%&ndash;Zostałeś wylogowany.&ndash;%&gt;--%>
+            <%--</div>--%>
         </fieldset>
     </form>
 </div>
