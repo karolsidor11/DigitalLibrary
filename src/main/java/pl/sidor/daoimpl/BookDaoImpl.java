@@ -35,6 +35,9 @@ public class BookDaoImpl implements BookDao {
         this.dataSource = dataSource;
     }
 
+    public BookDaoImpl() {
+    }
+
     @Override
     public List<Book> findByTitle(String title) {
 

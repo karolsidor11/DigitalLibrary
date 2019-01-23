@@ -12,6 +12,9 @@ public class BookServiceImpl implements BookService {
 
     private BookDao bookDao;
 
+    public BookServiceImpl() {
+    }
+
     @Autowired
     public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;

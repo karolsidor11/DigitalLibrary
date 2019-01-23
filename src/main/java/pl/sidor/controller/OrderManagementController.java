@@ -63,11 +63,22 @@ public class OrderManagementController {
     @PostMapping(value = "addOrder")
     public String addOrder(Model model, @RequestParam String book) {
         List<Book> byTitle = bookService.findByTitle(book);
-        cartService.addOrder(byTitle.get(0));
-        model.addAttribute("books", bookService.findAll());
-        model.addAttribute("order", cartService.findAll());
-        model.addAttribute("user", getName());
-        model.addAttribute("info", "Książka " + byTitle.get(0).getTitle() + " została dodana do zamówienia !!!");
+        Book book1 = byTitle.get(0);
+
+        checkOrder(book1, model);
+        if (cartService.findAll().size() < 7) {
+//            cartService.addOrder(byTitle.get(0));
+            model.addAttribute("books", bookService.findAll());
+            model.addAttribute("order", cartService.findAll());
+            model.addAttribute("user", getName());
+            model.addAttribute("info", "Książka " + byTitle.get(0).getTitle() + " została dodana do zamówienia !!!");
+        } else {
+            model.addAttribute("books", bookService.findAll());
+            model.addAttribute("order", cartService.findAll());
+            model.addAttribute("user", getName());
+            model.addAttribute("info", "Wykorzystałeś limit wypożyczania ksiażek !!!");
+        }
+
         return "orderManagement";
 
     }
@@ -88,6 +99,19 @@ public class OrderManagementController {
         return "orderManagement";
     }
 
+    // TODO Zaimplementować  sprawdzanie  czy ksiażka zaostałą już dodana do  zamówienia
+    private void checkOrder(Book book, Model model) {
+        List<Book> all = cartService.findAll();
+
+        if (all.isEmpty()) {
+            cartService.addOrder(book);
+        } else {
+            cartService.addOrder(book);
+
+        }
+
+    }
+
     private String getName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
@@ -97,8 +121,8 @@ public class OrderManagementController {
     private String getDateRetunBooks() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateReturn = LocalDate.parse(simpleDateFormat.format(date)).plusDays(7).toString();
 
-        return dateReturn;
+        return LocalDate.parse(simpleDateFormat.format(date)).plusDays(7).toString();
     }
+
 }

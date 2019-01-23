@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Zamówione ksiażki</title>
 </head>
 <body>
 <div align="center">Zamówione książki w Cyfrowej Wypożyczalni</div>

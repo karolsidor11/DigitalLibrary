@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Użytkownik
@@ -139,6 +140,7 @@
                        style=" font-size:20px; border-radius:5px; height: 40px; width: 200px;" value="Złóż zamówienie"
                        formaction="<c:url value="/makeOrder"/> ">
             </sf:form>
+            <a href="<c:url value="/users.pdf"/> "><button class="btn-primary" style="border-radius: 5px">Generuj PDF</button></a>
         </c:if>
 
 

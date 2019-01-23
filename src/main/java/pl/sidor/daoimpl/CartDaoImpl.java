@@ -20,7 +20,10 @@ public class CartDaoImpl implements CartDAO {
 
     @Override
     public void addOrder(Book book) {
-        bookList.add(book);
+        if(book!=null){
+            bookList.add(book);
+        }
+
     }
 
     @Override
